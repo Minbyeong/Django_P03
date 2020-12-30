@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block title %}- Result{% endblock %}
+
+{% block content %}
+    {% for post in informs %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 panel panel-default">
+                <img src="/static/finance/plot.png" style="width:100%; height:250px;">
+                <img src="/static/finance/arima.png" style="width:100%; height:250px;">
+                <div style="">
+                    <p> 💸 {{post.year}}년 {{post.mon}}월 {{post.day}}일의 애플 주가 예측 가격은 💸</p>
+                    <p> 💸 {{price}}$ 로 예측됩니다 💸</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    {% endfor %}
+{% endblock %}
+</body>
+</html>

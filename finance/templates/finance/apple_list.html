@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+{% extends 'base.html' %}
+{% block title %}- apple_list{% endblock %}
+
+{% block content %}
+
+<h1 style="padding:15px;"><B>2011-2020 Apple 주 실거래가</B></h1>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td><B>date</B></td>
+            <td><B>high</B></td>
+            <td><B>low</B></td>
+            <td><B>open</B></td>
+            <td><B>close</B></td>
+            <td><B>volume</B></td>
+            <td><B>adj close</B></td>
+        </tr>
+        </thead>
+        <tbody>
+            {% for aapl in object_list %}
+            <tr>
+                <td>{{aapl.date}}</td>
+                <td>{{aapl.high}}</td>
+                <td>{{aapl.low}}</td>
+                <td>{{aapl.open}}</td>
+                <td>{{aapl.close}}</td>
+                <td>{{aapl.volume}}</td>
+                <td>{{aapl.adj_close}}</td>
+            {% endfor %}
+        </tr>
+        <tbody>
+    </table>
+</div>
+{% endblock %}
+<div style="padding:5px;">
+    <style>
+        a {
+        margin:5px;
+        }
+    </style>
+    <center>
+        {% block pagination %}
+    {% if is_paginated %}
+        <ul class="pagination justify-content-center pagination-sm">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'finance:apple_list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for object in page_obj.pagination.page_range %}
+                <li class="page-item {% if page_obj.number == forloop.counter %}disabled{% endif %}">
+                    <a class="page-link" href="{{ request.path }}?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'finance:apple_list' %}?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+{% endblock %}
+    </center>
+</div>
+
+</body>
+</html>
